@@ -1,4 +1,4 @@
 package goutils
 type DB interface{
-	Connect(configPath *string) error
+	connect(configPath *string) error
 }
