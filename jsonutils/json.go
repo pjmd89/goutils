@@ -1,4 +1,4 @@
-package goutils
+package jsonutils
 
 import (
 	"encoding/json"
