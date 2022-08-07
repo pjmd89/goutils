@@ -16,8 +16,6 @@ type DBCommandsInterface interface{
 }
 type DBCommands struct{
 	DBCommandsInterface
-	db string
-	collection string
 }
 type DB struct {
 	DBInterface
@@ -25,7 +23,7 @@ type DB struct {
 	Port 			string		`json:"port"`
 	User 			string		`json:"user"`
 	Pass 			string		`json:"pass"`
-	DB   			string		`json:"db"`
+	DataBase   		string		`json:"db"`
 	Reconnect		bool		`json:"reconnect"`
 	SkipCollection	[]string	`json:"skipCollection"`
 	Commands		DBCommands
