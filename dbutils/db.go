@@ -1,7 +1,7 @@
 package dbutils
 type DBInterface interface{
-	Connect(configPath *string) error
-	Close() error
+	Connect() (err error)
+	Close() (err error)
 }
 type DBCommandsInterface interface{
 	Create(inputs interface{}, opts interface{}, results []*interface{})( err  error)
