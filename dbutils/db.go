@@ -2,6 +2,7 @@ package dbutils
 type DBInterface interface{
 	Connect() (err error)
 	Close() (err error)
+	GetClient() (client interface{})
 }
 type DBCommandsInterface interface{
 	Create(inputs interface{}, opts interface{}, results []*interface{})( err  error)
