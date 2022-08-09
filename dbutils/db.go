@@ -4,9 +4,6 @@ import "fmt"
 type DBInterface interface{
 	Connect() (err error)
 	Close() (err error)
-	GetClient() (client interface{})
-}
-type DBCommandsInterface interface{
 	Create(inputs interface{}, opts interface{}, results []*interface{})( err  error)
 	Read(where interface{}, opts interface{}, results []*interface{})( err  error)
 	Update(inputs interface{}, where interface {}, opts interface{}, results []*interface{}) ( err  error)
@@ -14,13 +11,9 @@ type DBCommandsInterface interface{
 	Count(where interface {}, opts interface{}, results []*interface{}) ( err  error)
 	SetDatabase(db string)
 	SetCollection(collection string)
+	GetClient() (client interface{})
 	GetDatabase() string
 	GetCollection() string
-}
-type DBCommands struct{
-	DBCommandsInterface
-	database string
-	collection string
 }
 type DB struct {
 	DBInterface
@@ -31,37 +24,38 @@ type DB struct {
 	DataBase   		string		`json:"db"`
 	Reconnect		bool		`json:"reconnect"`
 	SkipCollection	[]string	`json:"skipCollection"`
-	Commands		DBCommands
+	database 		string
+	collection 		string
 }
-func(o *DBCommands)Create(inputs interface{}, opts interface{}, results []*interface{})( err  error){
+func(o *DB)Create(inputs interface{}, opts interface{}, results []*interface{})( err  error){
 	err = fmt.Errorf("No declared method")
 	return err;
 }
-func(o *DBCommands)Read(where interface{}, opts interface{}, results []*interface{})( err  error){
+func(o *DB)Read(where interface{}, opts interface{}, results []*interface{})( err  error){
 	err = fmt.Errorf("No declared method")
 	return err;
 }
-func(o *DBCommands)Update(inputs interface{}, where interface {}, opts interface{}, results []*interface{}) ( err  error){
+func(o *DB)Update(inputs interface{}, where interface {}, opts interface{}, results []*interface{}) ( err  error){
 	err = fmt.Errorf("No declared method")
 	return err;
 }
-func(o *DBCommands)Delete(where interface {}, opts interface{}, results []*interface{}) ( err  error){
+func(o *DB)Delete(where interface {}, opts interface{}, results []*interface{}) ( err  error){
 	err = fmt.Errorf("No declared method")
 	return err;
 }
-func(o *DBCommands)Count(where interface {}, opts interface{}, results []*interface{}) ( err  error){
+func(o *DB)Count(where interface {}, opts interface{}, results []*interface{}) ( err  error){
 	err = fmt.Errorf("No declared method")
 	return err;
 }
-func(o *DBCommands)SetDatabase(db string){
+func(o *DB)SetDatabase(db string){
 	o.database = db
 }
-func(o *DBCommands)GetDatabase() string{
+func(o *DB)GetDatabase() string{
 	return o.database
 }
-func(o *DBCommands)SetCollection(collection string){
+func(o *DB)SetCollection(collection string){
 	o.collection = collection
 }
-func(o *DBCommands)GetCollection() string{
+func(o *DB)GetCollection() string{
 	return o.collection
 }
