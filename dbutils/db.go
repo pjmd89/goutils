@@ -1,6 +1,12 @@
 package dbutils
 
 import "fmt"
+type Model interface{
+	Create(inputs interface{}, opts interface{})(r interface{}, err  error)
+	Read(where interface{}, opts interface{})(r interface{}, err  error)
+	Update(inputs interface{}, where interface {}, opts interface{})(r interface{}, err  error)
+	Delete(where interface {}, opts interface{})(r interface{}, err  error)
+}
 type DBInterface interface{
 	Connect() (err error)
 	Close() (err error)
