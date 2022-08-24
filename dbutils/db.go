@@ -2,19 +2,19 @@ package dbutils
 
 import "fmt"
 type Model interface{
-	Create(inputs interface{}, opts interface{})(r interface{}, err  error)
-	Read(where interface{}, opts interface{})(r interface{}, err  error)
-	Update(inputs interface{}, where interface {}, opts interface{})(r interface{}, err  error)
-	Delete(where interface {}, opts interface{})(r interface{}, err  error)
+	Create(inputs interface{}, opts interface{})						( r interface{}, err  error )
+	Read(where interface{}, opts interface{})							( r interface{}, err  error )
+	Update(inputs interface{}, where interface {}, opts interface{})	( r interface{}, err  error )
+	Delete(where interface {}, opts interface{})						( r interface{}, err  error )
 }
 type DBInterface interface{
 	Connect() (err error)
 	Close() (err error)
-	Create(inputs interface{}, opts interface{}, results interface{})( err  error)
-	Read(where interface{}, opts interface{}, results interface{})( err  error)
-	Update(inputs interface{}, where interface {}, opts interface{}, results interface{}) ( err  error)
-	Delete(where interface {}, opts interface{}, results interface{}) ( err  error)
-	Count(where interface {}, opts interface{}, results interface{}) ( err  error)
+	Create(inputs interface{}, opts interface{})						( results interface{}, err  error )
+	Read(where interface{}, opts interface{})							( results interface{}, err  error )
+	Update(inputs interface{}, where interface {}, opts interface{}) 	( results interface{}, err  error )
+	Delete(where interface {}, opts interface{}) 						( results interface{}, err  error )
+	Count(where interface {}, opts interface{}) 						( results interface{}, err  error )
 	SetDatabase(db string)
 	SetCollection(collection string)
 	GetClient() (client interface{})
@@ -29,9 +29,9 @@ type DB struct {
 	Pass 			string		`json:"pass"`
 	DataBase   		string		`json:"db"`
 	Reconnect		bool		`json:"reconnect"`
-	SkipCollection	[]string	`json:"skipCollection"`
 	database 		string
 	collection 		string
+	OnDatabase		func(currentDB string, currentCollection string) ( string )
 }
 func(o *DB)Create(inputs interface{}, opts interface{}, results []*interface{})( err  error){
 	err = fmt.Errorf("No declared method")
