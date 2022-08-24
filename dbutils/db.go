@@ -19,7 +19,6 @@ type DBInterface interface{
 	SetCollection(collection string)
 	GetClient() (client interface{})
 	GetDatabase() string
-	GetCollection() string
 }
 type DB struct {
 	DBInterface
