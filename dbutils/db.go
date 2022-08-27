@@ -2,16 +2,17 @@ package dbutils
 
 import "fmt"
 type Model interface{
-	Create(inputs interface{}, opts interface{})						( r interface{}, err  error )
-	Read(where interface{}, opts interface{})							( r interface{}, err  error )
-	Update(inputs interface{}, where interface {}, opts interface{})	( r interface{}, err  error )
-	Delete(where interface {}, opts interface{})						( r interface{}, err  error )
+	Create(inputs map[string]interface{}, opts interface{})									(r interface{}, err error)
+	Read(where interface{}, opts interface{})												( r interface{}, err  error )
+	Update(inputs map[string]interface{}, where interface {}, opts interface{})				( r interface{}, err  error )
+	Delete(where interface {}, opts interface{})											( r interface{}, err  error )
+	Count(where interface {}, opts interface{})												( r int64, err  error )
 }
 type DBInterface interface{
 	Connect() (err error)
 	Close() (err error)
 	Create(inputs interface{}, collection string, opts interface{})							( results interface{}, err  error )
-	Read(where interface{}, collection string, opts interface{})							( results interface{}, err  error )
+	Read(where interface{}, collection string, opts interface{}, results interface{} )		( err  error )
 	Update(inputs interface{}, where interface {}, collection string, opts interface{}) 	( results interface{}, err  error )
 	Delete(where interface {}, collection string, opts interface{}) 						( results interface{}, err  error )
 	Count(where interface {}, collection string, opts interface{})	 						( results interface{}, err  error )
@@ -36,9 +37,9 @@ func(o *DB)Create(inputs interface{}, collection string, opts interface{})( resu
 	err = fmt.Errorf("No declared method")
 	return results, err;
 }
-func(o *DB)Read(where interface{}, collection string, opts interface{})( results interface{}, err  error){
+func(o *DB)Read(where interface{}, collection string, opts interface{}, results interface{} )( err  error){
 	err = fmt.Errorf("No declared method")
-	return results, err;
+	return err;
 }
 func(o *DB)Update(inputs interface{}, where interface {}, collection string, opts interface{}) (results interface{},  err  error){
 	err = fmt.Errorf("No declared method")

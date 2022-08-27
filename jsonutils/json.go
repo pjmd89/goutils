@@ -7,7 +7,7 @@ import (
 )
 
 func GetJson(path string, jsonInterface interface{}) {
-	content, err := ioutil.ReadFile("etc/"+path)
+	content, err := ioutil.ReadFile(path)
     if err != nil {
         log.Fatal(err);
     }
