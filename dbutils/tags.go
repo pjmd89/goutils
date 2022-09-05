@@ -17,7 +17,7 @@ type Tags struct {
 	UpdatedDate bool
 }
 
-func setBsonOmitTag(instance interface{}) (r interface{}) {
+func SetBsonOmitTag(instance interface{}) (r interface{}) {
 	valueOf := reflect.ValueOf(instance)
 	typeOf := valueOf.Type()
 	structFields := make([]reflect.StructField, 0)
@@ -38,7 +38,7 @@ func setBsonOmitTag(instance interface{}) (r interface{}) {
 	r = newStruct
 	return r
 }
-func getTags(field reflect.StructField) (r Tags) {
+func GetTags(field reflect.StructField) (r Tags) {
 	tag := field.Tag.Get("gql")
 	if tag != "" {
 		tagSplit := strings.Split(tag, ",")
