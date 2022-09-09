@@ -1,4 +1,4 @@
-package goutils
+package systemutils
 
 import (
 	"bytes"
