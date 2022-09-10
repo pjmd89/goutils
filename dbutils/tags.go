@@ -68,6 +68,20 @@ func GetTags(field reflect.StructField) (r Tags) {
 				}
 				r.IsObjectID = isTrue
 				break
+			case "nested":
+				isTrue := false
+				if strings.Trim(dataSplit[1], " ") == "true" {
+					isTrue = true
+				}
+				r.IsNested = isTrue
+				break
+			case "omit":
+				isTrue := false
+				if strings.Trim(dataSplit[1], " ") == "true" {
+					isTrue = true
+				}
+				r.IsOmit = isTrue
+				break
 			case "createdDate":
 				isTrue := false
 				if strings.Trim(dataSplit[1], " ") == "true" {
