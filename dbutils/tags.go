@@ -13,6 +13,8 @@ type Tags struct {
 	IsDefault   bool
 	IsID        bool
 	IsObjectID  bool
+	IsOmit      bool
+	IsNested    bool
 	CreatedDate bool
 	UpdatedDate bool
 }
