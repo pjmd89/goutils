@@ -19,9 +19,8 @@ type params struct {
 	keyLength   uint32
 }
 type Argon2 struct {
-	passwordString string
-	aType          argonType
-	p              *params
+	aType argonType
+	p     *params
 }
 type argonType int
 
@@ -35,8 +34,7 @@ const (
 	ARGON_ID
 )
 
-func NewArgon2(passwordString string) (r *Argon2) {
-	r.passwordString = passwordString
+func NewArgon2() (r *Argon2) {
 	r.aType = ARGON_I
 	r.p = &params{
 		memory:      64 * 1024,
@@ -53,9 +51,6 @@ func (o *Argon2) UseArgon2I() {
 }
 func (o *Argon2) UseArgon2ID() {
 	o.aType = ARGON_ID
-}
-func (o *Argon2) SetPasswordString(password string) {
-	o.passwordString = password
 }
 func (o *Argon2) SetParams(memory uint32, iterations uint32, parallelism uint8, saltLength uint32, keyLength uint32) {
 	o.p.memory = memory
