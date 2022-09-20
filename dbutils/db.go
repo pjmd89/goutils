@@ -16,6 +16,7 @@ type DBInterface interface {
 	Create(inputs interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Read(where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Update(inputs interface{}, where interface{}, collection string, opts interface{}) (results interface{}, err error)
+	Replace(inputs interface{}, where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Delete(where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Count(where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	SetDatabase(db string)
