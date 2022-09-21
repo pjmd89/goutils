@@ -40,6 +40,50 @@ func SetBsonOmitTag(instance interface{}) (r interface{}) {
 	r = newStruct
 	return r
 }
+func CreateStruct(instance interface{}, scalarIdType interface{}, idType interface{}, update bool) (r interface{}) {
+	valueOf := reflect.ValueOf(instance)
+	typeOf := valueOf.Type()
+	structFields := make([]reflect.StructField, 0)
+	for i := 0; i < typeOf.NumField(); i++ {
+		field := typeOf.Field(i)
+
+		tag := fmt.Sprintf("%v", typeOf.Field(i).Tag)
+		tagFind := regexp.MustCompile(`bson:"[^"\-]+"`)
+		notFind := regexp.MustCompile(`omitempty`)
+		result := tagFind.FindString(tag)
+
+		if !notFind.MatchString(result) && strings.Trim(result, " ") != "" {
+			replace := regexp.MustCompile(`(bson:"[^"]+)(["])`)
+			tag = replace.ReplaceAllString(tag, "$1,omitempty\"")
+		}
+		switch field.Type.Kind() {
+		case reflect.Struct:
+			newInstance := reflect.New(field.Type.Elem()).Elem().Interface()
+			field.Type = reflect.TypeOf(CreateStruct(newInstance, scalarIdType, idType, update))
+		case reflect.Ptr:
+			if field.Type.Elem().Kind() == reflect.Struct {
+				newInstance := reflect.New(field.Type.Elem()).Interface()
+				field.Type = reflect.TypeOf(CreateStruct(newInstance, scalarIdType, idType, update))
+			}
+			if field.Type.Elem() == reflect.TypeOf(scalarIdType) {
+				id := reflect.New(reflect.TypeOf(idType)).Interface()
+				field.Type = reflect.TypeOf(id)
+			}
+		case reflect.Slice, reflect.Array:
+			if field.Type.Elem() == reflect.TypeOf(scalarIdType) {
+				field.Type = reflect.MakeSlice(reflect.TypeOf(idType), 0, 0).Type()
+			}
+		}
+		if update {
+			field.Tag = reflect.StructTag(tag)
+		}
+		structFields = append(structFields, field)
+	}
+	newType := reflect.StructOf(structFields)
+	newStruct := reflect.New(newType).Elem().Interface()
+	r = newStruct
+	return r
+}
 func GetTags(field reflect.StructField) (r Tags) {
 	tag := field.Tag.Get("gql")
 	if tag != "" {
