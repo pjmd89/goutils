@@ -71,10 +71,8 @@ func CreateStruct(instance interface{}, scalarIdType interface{}, idType interfa
 				field.Type = reflect.TypeOf(id)
 			}
 		case reflect.Slice, reflect.Array:
-			fmt.Println(field.Type, reflect.TypeOf(scalarIdType))
 			if field.Type == reflect.TypeOf(scalarIdType) {
-				sliceType := reflect.MakeSlice(reflect.SliceOf(reflect.TypeOf(idType)), 0, 0)
-				field.Type = sliceType.Type()
+				field.Type = reflect.TypeOf(idType)
 			}
 		}
 		if update {
