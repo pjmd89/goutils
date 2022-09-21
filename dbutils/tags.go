@@ -19,27 +19,6 @@ type Tags struct {
 	UpdatedDate bool
 }
 
-func SetBsonOmitTag(instance interface{}) (r interface{}) {
-	valueOf := reflect.ValueOf(instance)
-	typeOf := valueOf.Type()
-	structFields := make([]reflect.StructField, 0)
-	for i := 0; i < typeOf.NumField(); i++ {
-		tag := fmt.Sprintf("%v", typeOf.Field(i).Tag)
-		tagFind := regexp.MustCompile(`bson:"[^"\-]+"`)
-		notFind := regexp.MustCompile(`omitempty`)
-		result := tagFind.FindString(tag)
-		if !notFind.MatchString(result) && strings.Trim(result, " ") != "" {
-			replace := regexp.MustCompile(`(bson:"[^"]+)(["])`)
-			tag = replace.ReplaceAllString(tag, "$1,omitempty\"")
-		}
-		structFields = append(structFields, typeOf.Field(i))
-		structFields[i].Tag = reflect.StructTag(tag)
-	}
-	newType := reflect.StructOf(structFields)
-	newStruct := valueOf.Convert(newType).Interface()
-	r = newStruct
-	return r
-}
 func CreateStruct(instance interface{}, scalarIdType interface{}, idType interface{}, update bool) (r interface{}) {
 	valueOf := reflect.ValueOf(instance)
 	typeOf := valueOf.Type()
