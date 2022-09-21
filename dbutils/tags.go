@@ -58,20 +58,23 @@ func CreateStruct(instance interface{}, scalarIdType interface{}, idType interfa
 		}
 		switch field.Type.Kind() {
 		case reflect.Struct:
-			newInstance := reflect.New(field.Type.Elem()).Elem().Interface()
+			newInstance := reflect.New(field.Type).Elem().Interface()
 			field.Type = reflect.TypeOf(CreateStruct(newInstance, scalarIdType, idType, update))
 		case reflect.Ptr:
 			if field.Type.Elem().Kind() == reflect.Struct {
-				newInstance := reflect.New(field.Type.Elem()).Interface()
-				field.Type = reflect.TypeOf(CreateStruct(newInstance, scalarIdType, idType, update))
+				newPtrInstance := reflect.New(field.Type.Elem()).Elem().Interface()
+				newInstance := CreateStruct(newPtrInstance, scalarIdType, idType, update)
+				field.Type = reflect.New(reflect.TypeOf(newInstance)).Type()
 			}
 			if field.Type.Elem() == reflect.TypeOf(scalarIdType) {
 				id := reflect.New(reflect.TypeOf(idType)).Interface()
 				field.Type = reflect.TypeOf(id)
 			}
 		case reflect.Slice, reflect.Array:
-			if field.Type.Elem() == reflect.TypeOf(scalarIdType) {
-				field.Type = reflect.MakeSlice(reflect.TypeOf(idType), 0, 0).Type()
+			fmt.Println(field.Type, reflect.TypeOf(scalarIdType))
+			if field.Type == reflect.TypeOf(scalarIdType) {
+				sliceType := reflect.MakeSlice(reflect.SliceOf(reflect.TypeOf(idType)), 0, 0)
+				field.Type = sliceType.Type()
 			}
 		}
 		if update {
