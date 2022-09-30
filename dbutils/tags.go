@@ -19,7 +19,7 @@ type Tags struct {
 	UpdatedDate bool
 }
 
-func CreateStruct(instance interface{}, idType interface{}, update bool) (r interface{}) {
+func CreateStruct(instance interface{}, update bool) (r interface{}) {
 	valueOf := reflect.ValueOf(instance)
 	typeOf := valueOf.Type()
 	structFields := make([]reflect.StructField, 0)
@@ -38,11 +38,11 @@ func CreateStruct(instance interface{}, idType interface{}, update bool) (r inte
 		switch field.Type.Kind() {
 		case reflect.Struct:
 			newInstance := reflect.New(field.Type).Elem().Interface()
-			field.Type = reflect.TypeOf(CreateStruct(newInstance, idType, update))
+			field.Type = reflect.TypeOf(CreateStruct(newInstance, update))
 		case reflect.Ptr:
 			if field.Type.Elem().Kind() == reflect.Struct {
 				newPtrInstance := reflect.New(field.Type.Elem()).Elem().Interface()
-				newInstance := CreateStruct(newPtrInstance, idType, update)
+				newInstance := CreateStruct(newPtrInstance, update)
 				field.Type = reflect.New(reflect.TypeOf(newInstance)).Type()
 			}
 		case reflect.Slice, reflect.Array:
