@@ -8,7 +8,7 @@ type ModelInterface interface {
 	Update(inputs map[string]interface{}, where interface{}, opts interface{}) (r interface{}, err error)
 	Delete(where interface{}, opts interface{}) (r interface{}, err error)
 	Count(where interface{}, opts interface{}) (r int64, err error)
-	Init(self interface{}, db DBInterface, scalarId interface{})
+	Init(self interface{}, db DBInterface)
 }
 type DBInterface interface {
 	Connect() (err error)
