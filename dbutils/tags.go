@@ -100,14 +100,14 @@ func GetTags(field reflect.StructField) (r Tags) {
 				}
 				r.IsOmit = isTrue
 				break
-			case "createdDate":
+			case "created":
 				isTrue := false
 				if strings.Trim(dataSplit[1], " ") == "true" {
 					isTrue = true
 				}
 				r.CreatedDate = isTrue
 				break
-			case "updatedDate":
+			case "updated":
 				isTrue := false
 				if strings.Trim(dataSplit[1], " ") == "true" {
 					isTrue = true
