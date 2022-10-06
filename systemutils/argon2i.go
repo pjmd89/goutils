@@ -35,6 +35,7 @@ const (
 )
 
 func NewArgon2() (r *Argon2) {
+	r = &Argon2{}
 	r.aType = ARGON_I
 	r.p = &params{
 		memory:      64 * 1024,
