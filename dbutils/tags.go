@@ -119,7 +119,7 @@ func GetTags(field reflect.StructField) (r Tags) {
 			case "change":
 				r.Change = dataSplit[1]
 			case "compose":
-				r.Compose = strings.Split(v, "|")
+				r.Compose = strings.Split(dataSplit[1], "|")
 			}
 		}
 	}
