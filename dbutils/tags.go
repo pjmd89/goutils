@@ -17,6 +17,8 @@ type Tags struct {
 	IsNested    bool
 	CreatedDate bool
 	UpdatedDate bool
+	Change      string
+	Compose     []string
 }
 
 func CreateStruct(instance interface{}, update bool) (r interface{}) {
@@ -114,6 +116,10 @@ func GetTags(field reflect.StructField) (r Tags) {
 				}
 				r.UpdatedDate = isTrue
 				break
+			case "change":
+				r.Change = dataSplit[1]
+			case "compose":
+				r.Compose = strings.Split(v, "|")
 			}
 		}
 	}
