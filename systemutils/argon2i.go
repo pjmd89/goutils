@@ -77,7 +77,7 @@ func (o *Argon2) generateFromPassword(password string) (encodedHash string, err 
 	b64Salt := base64.RawStdEncoding.EncodeToString(salt)
 	switch o.aType {
 	case ARGON_I:
-		hash := argon2.IDKey([]byte(password), salt, o.p.iterations, o.p.memory, o.p.parallelism, o.p.keyLength)
+		hash := argon2.Key([]byte(password), salt, o.p.iterations, o.p.memory, o.p.parallelism, o.p.keyLength)
 		b64Hash := base64.RawStdEncoding.EncodeToString(hash)
 		encodedHash = fmt.Sprintf("$argon2i$v=%d$m=%d,t=%d,p=%d$%s$%s", argon2.Version, o.p.memory, o.p.iterations, o.p.parallelism, b64Salt, b64Hash)
 		break
