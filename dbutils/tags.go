@@ -51,12 +51,34 @@ func CreateStruct(instance interface{}, update bool) (r interface{}) {
 
 		}
 		if update {
+			replaceGQL := regexp.MustCompile(`(gql:"[^"]+)(["])`)
+			result := replaceGQL.FindString(tag)
+
+			if result != "" {
+				replace := regexp.MustCompile(`:`)
+				result2 := replace.Split(result, -1)
+				tag2 := strings.Replace(result2[1], `"`, "", -1)
+				replace2 := regexp.MustCompile(`,`)
+				result3 := replace2.Split(tag2, -1)
+				replace3 := regexp.MustCompile(`=`)
+				var updateTag []string
+				for _, sv := range result3 {
+					result4 := replace3.Split(sv, -1)
+					if result4[0] != "default" {
+						updateTag = append(updateTag, sv)
+					}
+				}
+				tag = replaceGQL.ReplaceAllString(tag, `gql:"`+strings.Join(updateTag, ",")+`"`)
+			}
 			field.Tag = reflect.StructTag(tag)
 		}
 		structFields = append(structFields, field)
 	}
 	newType := reflect.StructOf(structFields)
 	newStruct := reflect.New(newType).Elem().Interface()
+	if update {
+		//newStruct = reflect.New(newType).Elem().Convert(typeOf).Interface()
+	}
 	r = newStruct
 	return r
 }
