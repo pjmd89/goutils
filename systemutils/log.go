@@ -11,6 +11,10 @@ import (
 	"github.com/pjmd89/goutils/systemutils/debugmode"
 )
 
+type Logs struct {
+	System *Log
+	Access *Log
+}
 type Log struct {
 	path      string
 	fileName  string
@@ -32,9 +36,11 @@ func NewLog(filePath string) (r *Log) {
 		log.Fatal("log not loaded: " + err.Error())
 		return nil
 	}
-	r.path = path
-	r.fileName = fileName
-	r.extension = extension
+	r = &Log{
+		path:      path,
+		fileName:  fileName,
+		extension: extension,
+	}
 	return
 }
 func logFile(path string, fileName string, extension string) (r *os.File) {
@@ -53,46 +59,46 @@ func logFile(path string, fileName string, extension string) (r *os.File) {
 	return
 }
 func (o *Log) Error() (r *log.Logger) {
+	var file *os.File
 	if !debugmode.Enabled {
-		file := logFile(o.path, o.fileName, o.extension)
-		r = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
+		file = logFile(o.path, o.fileName, o.extension)
 	} else {
 		r = &log.Logger{}
-		r.SetPrefix("ERROR: ")
-		r.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+		file = os.Stderr
 	}
+	r = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
 	return
 }
 func (o *Log) Warning() (r *log.Logger) {
+	var file *os.File
 	if !debugmode.Enabled {
-		file := logFile(o.path, o.fileName, o.extension)
-		r = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
+		file = logFile(o.path, o.fileName, o.extension)
 	} else {
 		r = &log.Logger{}
-		r.SetPrefix("WARNING: ")
-		r.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+		file = os.Stderr
 	}
+	r = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
 	return
 }
 func (o *Log) Info() (r *log.Logger) {
+	var file *os.File
 	if !debugmode.Enabled {
-		file := logFile(o.path, o.fileName, o.extension)
-		r = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
+		file = logFile(o.path, o.fileName, o.extension)
 	} else {
 		r = &log.Logger{}
-		r.SetPrefix("INFO: ")
-		r.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+		file = os.Stdout
 	}
+	r = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
 	return
 }
 func (o *Log) Fatal() (r *log.Logger) {
+	var file *os.File
 	if !debugmode.Enabled {
-		file := logFile(o.path, o.fileName, o.extension)
-		r = log.New(file, "FATAL: ", log.Ldate|log.Ltime|log.Llongfile)
+		file = logFile(o.path, o.fileName, o.extension)
 	} else {
 		r = &log.Logger{}
-		r.SetPrefix("FATAL: ")
-		r.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+		file = os.Stderr
 	}
+	r = log.New(file, "FATAL: ", log.Ldate|log.Ltime|log.Llongfile)
 	return
 }
