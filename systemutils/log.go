@@ -46,13 +46,12 @@ func NewLog(filePath string) (r *Log) {
 func logFile(path string, fileName string, extension string) (r *os.File) {
 	if !debugmode.Enabled {
 		year, month, day := time.Now().Date()
-		filePath := fmt.Sprintf(path+"/"+fileName+"-%v-%v-%v."+extension, day, month.String(), year)
-		file, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		filePath := fmt.Sprintf(path+"/"+fileName+"-%v-%v-%v"+extension, day, month.String(), year)
+		file, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 		if err != nil {
 			log.Fatal("log not loaded: " + err.Error())
 		}
-		defer file.Close()
-		//r.logger = log.New(file, prefix, log.Ldate|log.Ltime|log.Llongfile)
+		r = file
 	} else {
 		r = nil
 	}
@@ -67,6 +66,7 @@ func (o *Log) Error() (r *log.Logger) {
 		file = os.Stderr
 	}
 	r = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
+	r.SetOutput(file)
 	return
 }
 func (o *Log) Warning() (r *log.Logger) {
@@ -78,6 +78,7 @@ func (o *Log) Warning() (r *log.Logger) {
 		file = os.Stderr
 	}
 	r = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
+	r.SetOutput(file)
 	return
 }
 func (o *Log) Info() (r *log.Logger) {
@@ -89,6 +90,7 @@ func (o *Log) Info() (r *log.Logger) {
 		file = os.Stdout
 	}
 	r = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
+	r.SetOutput(file)
 	return
 }
 func (o *Log) Fatal() (r *log.Logger) {
@@ -100,5 +102,6 @@ func (o *Log) Fatal() (r *log.Logger) {
 		file = os.Stderr
 	}
 	r = log.New(file, "FATAL: ", log.Ldate|log.Ltime|log.Llongfile)
+	r.SetOutput(file)
 	return
 }
