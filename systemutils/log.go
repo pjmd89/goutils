@@ -27,7 +27,7 @@ func NewLog(filePath string) (r *Log) {
 	fileName := filepath.Base(p)
 	extension := filepath.Ext(fileName)
 	fileName = strings.TrimSuffix(fileName, filepath.Ext(fileName))
-	err = os.Mkdir(path, 0666)
+	err = os.MkdirAll(path, 0666)
 	if err != nil {
 		log.Fatal("log not loaded: " + err.Error())
 		return nil
