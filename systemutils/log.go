@@ -52,7 +52,7 @@ func logFile(path string, fileName string, extension string) (r *os.File) {
 	}
 	return
 }
-func (o *Log) Error(s string, vars ...any) (r *log.Logger) {
+func (o *Log) Error() (r *log.Logger) {
 	if !debugmode.Enabled {
 		file := logFile(o.path, o.fileName, o.extension)
 		r = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
@@ -63,7 +63,7 @@ func (o *Log) Error(s string, vars ...any) (r *log.Logger) {
 	}
 	return
 }
-func (o *Log) Warning(s string, vars ...any) (r *log.Logger) {
+func (o *Log) Warning() (r *log.Logger) {
 	if !debugmode.Enabled {
 		file := logFile(o.path, o.fileName, o.extension)
 		r = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
@@ -74,7 +74,7 @@ func (o *Log) Warning(s string, vars ...any) (r *log.Logger) {
 	}
 	return
 }
-func (o *Log) Info(s string, vars ...any) (r *log.Logger) {
+func (o *Log) Info() (r *log.Logger) {
 	if !debugmode.Enabled {
 		file := logFile(o.path, o.fileName, o.extension)
 		r = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
@@ -85,7 +85,7 @@ func (o *Log) Info(s string, vars ...any) (r *log.Logger) {
 	}
 	return
 }
-func (o *Log) Fatal(s string, vars ...any) (r *log.Logger) {
+func (o *Log) Fatal() (r *log.Logger) {
 	if !debugmode.Enabled {
 		file := logFile(o.path, o.fileName, o.extension)
 		r = log.New(file, "FATAL: ", log.Ldate|log.Ltime|log.Llongfile)
