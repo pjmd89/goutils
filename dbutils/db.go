@@ -27,6 +27,7 @@ type DBInterface interface {
 	Replace(inputs interface{}, where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Delete(where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Count(where interface{}, collection string, opts interface{}) (results interface{}, err error)
+	Watch(where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	SetDatabase(db string)
 	SetCollection(collection string)
 	GetClient() (client interface{})
@@ -64,6 +65,10 @@ func (o *DB) Delete(where interface{}, collection string, opts interface{}) (res
 func (o *DB) Count(where interface{}, collection string, opts interface{}) (results interface{}, err error) {
 	err = fmt.Errorf("No declared method")
 	return results, err
+}
+func (o *DB) Watch(where interface{}, collection string, opts interface{}, results interface{}) (err error) {
+	err = fmt.Errorf("No declared method")
+	return err
 }
 func (o *DB) SetDatabase(db string) {
 	o.database = db
