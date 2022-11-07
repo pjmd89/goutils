@@ -10,6 +10,7 @@ type ModelInterface interface {
 	Count(where interface{}, opts interface{}) (r int64, err error)
 	Init(self interface{}, db DBInterface)
 	RawRead(where interface{}, opts interface{}) (r interface{}, err error)
+	WatchRead(where interface{}, opts interface{}) (r interface{}, err error)
 	RawUpdate(inputs map[string]interface{}, where interface{}, opts interface{}) (r interface{}, err error)
 	Replace(inputs map[string]interface{}, where interface{}, opts interface{}) (r interface{}, err error)
 	InterfaceUpdate(inputs interface{}, where interface{}, opts interface{}) (r interface{}, err error)
