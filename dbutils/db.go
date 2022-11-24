@@ -10,7 +10,7 @@ type ModelInterface interface {
 	Count(where interface{}, opts interface{}) (r int64, err error)
 	Init(self interface{}, db DBInterface)
 	RawRead(where interface{}, opts interface{}) (r interface{}, err error)
-	Watch(where interface{}, opts interface{}, callback func(any)) (r interface{}, err error)
+	Watch(where interface{}, opts interface{}, callback func(any)) (err error)
 	RawUpdate(inputs map[string]interface{}, where interface{}, opts interface{}) (r interface{}, err error)
 	Replace(inputs map[string]interface{}, where interface{}, opts interface{}) (r interface{}, err error)
 	InterfaceUpdate(inputs interface{}, where interface{}, opts interface{}) (r interface{}, err error)
@@ -66,7 +66,7 @@ func (o *DB) Count(where interface{}, collection string, opts interface{}) (resu
 	err = fmt.Errorf("No declared method")
 	return results, err
 }
-func (o *DB) Watch(where interface{}, collection string, opts interface{}, results interface{}) (err error) {
+func (o *DB) Watch(where interface{}, collection string, opts interface{}) (err error) {
 	err = fmt.Errorf("No declared method")
 	return err
 }
