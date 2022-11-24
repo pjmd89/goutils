@@ -27,7 +27,7 @@ type DBInterface interface {
 	Replace(inputs interface{}, where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Delete(where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Count(where interface{}, collection string, opts interface{}) (results interface{}, err error)
-	Watch(where interface{}, collection string, opts interface{}) (results interface{}, err error)
+	Watch(where interface{}, collection string, opts interface{}, callback func(any)) (results interface{}, err error)
 	SetDatabase(db string)
 	SetCollection(collection string)
 	GetClient() (client interface{})
