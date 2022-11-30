@@ -175,7 +175,7 @@ func (ff *FFMpeg) setThumbArguments() (r []string) {
 		"00:00:15",
 		"-frames:v",
 		"1",
-		ff.splitPath + "/thumb.jpg",
+		ff.splitPath + "/../thumb.jpg",
 	}
 	r = arguments
 	return
