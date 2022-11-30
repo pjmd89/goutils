@@ -165,9 +165,7 @@ func (ff *FFMpeg) IsDone() bool {
 }
 func (ff *FFMpeg) GetThumb() {
 	arguments := ff.setThumbArguments()
-	cmd := exec.Command("ffmpeg", arguments...)
-	out, err := cmd.Output()
-	fmt.Println(out, err, arguments)
+	exec.Command("ffmpeg", arguments...).Output()
 }
 func (ff *FFMpeg) setThumbArguments() (r []string) {
 	arguments := []string{
