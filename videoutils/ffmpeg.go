@@ -163,6 +163,23 @@ func (ff *FFMpeg) IsDone() bool {
 
 	return ff.done
 }
+func (ff *FFMpeg) GetThumb() {
+	arguments := ff.setThumbArguments()
+	exec.Command("ffmpeg", arguments...)
+}
+func (ff *FFMpeg) setThumbArguments() (r []string) {
+	arguments := []string{
+		"-i",
+		ff.filePath,
+		"-ss",
+		"00:00:15",
+		"-frames:v",
+		"1",
+		ff.splitPath + "/thumb.jpg",
+	}
+	r = arguments
+	return
+}
 func (ff *FFMpeg) setArguments(hls bool) []string {
 	var arguments []string
 	/*
@@ -187,12 +204,15 @@ func (ff *FFMpeg) setArguments(hls bool) []string {
 			"fast",
 		}
 	*/
+	//"-y -vcodec libx264 -tag:v avc1 -strict -2 -crf 28 -acodec aac -f mp4 -hide_banner -preset ultrafast"
 	arguments = []string{
 		"-i",
 		ff.filePath,
 		"-y",
 		"-vcodec",
 		"libx264",
+		"-tag:v",
+		"avc1",
 		"-strict",
 		"-2",
 		"-crf",
