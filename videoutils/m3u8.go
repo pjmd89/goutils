@@ -1,7 +1,6 @@
 package videoutils
 
 import (
-	"log"
 	"regexp"
 	"strconv"
 )
@@ -35,8 +34,4 @@ func NewItem(itemString string) *PlaylistItem {
 		}
 	}
 	return item
-}
-
-func xx(str string) {
-	log.Println(str)
 }
