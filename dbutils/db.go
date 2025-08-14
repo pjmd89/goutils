@@ -26,6 +26,7 @@ type DBInterface interface {
 	//CreateIndex(inputs interface{}, collection string, indexModelOpts, opts interface{}) (results interface{}, err error)
 	//ListIndexes(collection string, opts interface{}) (results interface{}, err error)
 	//DropIndex(name, collection string, opts interface{}) (results interface{}, err error)
+	Aggregate(pipeline interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Read(where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Update(inputs interface{}, where interface{}, collection string, opts interface{}) (results interface{}, err error)
 	Replace(inputs interface{}, where interface{}, collection string, opts interface{}) (results interface{}, err error)
